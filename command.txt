@@ -1,0 +1,64 @@
+#### If the commands are not work in window cmd, powershell or terminal then use the git bash 
+
+### Install Tessera
+# Installed tessera binary distribution
+
+## Setup the tessera on environment 
+
+## Create a Node1, Node2, Node3 and Node4 directories, and inside these directories create a data and Tessera directories
+tree
+
+## Create the ibftConfigFile.json
+## Run the command into the terminal - that help to create a genesis.json file
+besu operator generate-blockchain-config --config-file=ibftConfigFile.json --to=networkFiles --private-key-file-name=key
+
+## Move all the key pair in different-different Node-data directories
+
+## move Tessera directory of Node1
+cd Node1/Tessera
+## Generate the keygen
+tessera keygen -filename nodeKey 
+
+## move Tessera directory of Node2
+cd Node2/Tessera
+## Generate the keygen
+tessera keygen -filename nodeKey 
+
+## move Tessera directory of Node
+cd Node3/Tessera
+## Generate the keygen
+tessera keygen -filename nodeKey 
+
+## move Tessera directory of Node4
+cd Node4/Tessera
+## Generate the keygen
+tessera keygen -filename nodeKey 
+
+## Create the tessera.conf file and copy the code on these Files
+## Again move to Node1/Tessera directory, Start the Tessera nodes
+tessera -configfile tessera.conf
+
+## Again move to Node2/Tessera directory, Start the Tessera nodes
+tessera -configfile tessera.conf
+
+## Again move to Node3/Tessera directory, Start the Tessera nodes
+tessera -configfile tessera.conf
+
+## Again move to Node5/Tessera directory, Start the Tessera nodes
+tessera -configfile tessera.conf
+
+
+## Now Start the Besu Nodes -- command for MacOs/git bash
+# cd Node1
+besu --data-path=data --genesis-file=../genesis.json --rpc-http-enabled --rpc-http-api=ETH,NET,IBFT,EEA,PRIV --host-allowlist=* --rpc-http-cors-origins=all --privacy-enabled --privacy-url=http://127.0.0.1:9102 --privacy-public-key-file=Tessera/nodeKey.pub --min-gas-price=0 --data-storage-format=FOREST
+
+Enode URL enode://5052d6e84e67e915ff18c7b376e9370898c03499ccb03cc88309c2add0ff997bd3cea4118b9193b1da1bd7ab1f3ef88f8c02f162b1435e31acbe3826b63a7ca6@127.0.0.1:30303
+
+# cd Node2
+besu --data-path=data --genesis-file=../genesis.json --bootnodes=enode://5052d6e84e67e915ff18c7b376e9370898c03499ccb03cc88309c2add0ff997bd3cea4118b9193b1da1bd7ab1f3ef88f8c02f162b1435e31acbe3826b63a7ca6@127.0.0.1:30303 --p2p-port=30304 --rpc-http-enabled --rpc-http-api=ETH,NET,IBFT,EEA,PRIV --host-allowlist=* --rpc-http-cors-origins=all --rpc-http-port=8546 --privacy-enabled --privacy-url=http://127.0.0.1:9202 --privacy-public-key-file=Tessera/nodeKey.pub --min-gas-price=0 --data-storage-format=FOREST
+
+# cd Node3
+besu --data-path=data --genesis-file=../genesis.json --bootnodes=enode://5052d6e84e67e915ff18c7b376e9370898c03499ccb03cc88309c2add0ff997bd3cea4118b9193b1da1bd7ab1f3ef88f8c02f162b1435e31acbe3826b63a7ca6@127.0.0.1:30303 --p2p-port=30305 --rpc-http-enabled --rpc-http-api=ETH,NET,IBFT,EEA,PRIV --host-allowlist=* --rpc-http-cors-origins=all --rpc-http-port=8547 --privacy-enabled --privacy-url=http://127.0.0.1:9302 --privacy-public-key-file=Tessera/nodeKey.pub --min-gas-price=0 --data-storage-format=FOREST
+
+# cd Node4
+besu --data-path=data --genesis-file=../genesis.json --bootnodes=enode://5052d6e84e67e915ff18c7b376e9370898c03499ccb03cc88309c2add0ff997bd3cea4118b9193b1da1bd7ab1f3ef88f8c02f162b1435e31acbe3826b63a7ca6@127.0.0.1:30303 --p2p-port=30306 --rpc-http-enabled --rpc-http-api=ETH,NET,IBFT,EEA,PRIV --host-allowlist=* --rpc-http-cors-origins=all --rpc-http-port=8548 --privacy-enabled --privacy-url=http://127.0.0.1:9402 --privacy-public-key-file=Tessera/nodeKey.pub --min-gas-price=0 --data-storage-format=FOREST
